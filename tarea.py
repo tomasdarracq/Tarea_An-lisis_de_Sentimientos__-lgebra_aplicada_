@@ -28,11 +28,9 @@ key_words = positive_words + neutral_words + negative_words
 def calculate_vectors(phrase, positive_words, neutral_words, negative_words, key_words):
     w = []  # palabras claves que hay en la frase
     s = [0, 0, 0]  # cantidad de palabras positivas, neutrales y negativas por frase
-    words_in_phrase = phrase.lower().split(" ")
-
+    words_in_phrase = [word.strip('.,!?').lower() for word in phrase.split()]
     # Calcular w
     for word in key_words:
-        word = word.strip('.,!?')
         if word in words_in_phrase:
             w.append(1)
         else:
@@ -57,12 +55,9 @@ def avg_s(s):
     return np.dot((1, 0, -1), s)
 
 
-print("Phrase        w        s        avg_w    avg_s\n----------------------------------------")
+print("Phrase        Average w    Average s\n--------------------------------------------------------------------------------------------")
 for phrase in phrases:
     w, s = calculate_vectors(
         phrase, positive_words, neutral_words, negative_words, key_words)
-    print(phrase, w, s, str(avg_w(w)), str(avg_s(s)))
-    print
-
-w, s = calculate_vectors(phrases, positive_words,
-                         neutral_words, negative_words,)
+    print(phrase, "|",str(avg_w(w)),"|", str(avg_s(s)), "|")
+    print("--------------------------------------------------------------------------------------------")
