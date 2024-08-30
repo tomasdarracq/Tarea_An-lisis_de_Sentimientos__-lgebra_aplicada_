@@ -23,15 +23,19 @@ positive_words = ["excelente", "deliciosa", "feliz",
 neutral_words = ["servicio", "situacion",
                  "proyecto", "pelicula", "evento", "relacion"]
 negative_words = ["perdida", "alarmante", "ruidosa",
-                  "molesta", "fracaso", "devastadora", "deterioradas", "criticada"]
+                  "molesta", "fracaso", "devastadora",
+                  "deterioradas", "criticada"]
 key_words = positive_words + neutral_words + negative_words
 
 
-def calculate_vectors(phrase, positive_words, neutral_words, negative_words, key_words):
-    w = []  # palabras claves que hay en la frase
-    s = [0, 0, 0]  # cantidad de palabras positivas, neutrales y negativas por frase
+def calculate_vectors(phrase, positive_words,
+                      neutral_words, negative_words, key_words):
+    # Palabras claves que hay en la frase
+    w = []
+    # Cantidad de palabras positivas, neutrales y negativas por frase
+    s = [0, 0, 0]
     words_in_phrase = [word.strip('.,!?').lower() for word in phrase.split()]
-    
+
     # Calcular w
     for word in key_words:
         if word in words_in_phrase:
@@ -54,16 +58,20 @@ def calculate_vectors(phrase, positive_words, neutral_words, negative_words, key
 def avg_w(w):
     return sum(w) / len(w)
 
+
 def avg_s(s):
     return np.dot((1, 0, -1), s)
 
 
-print("Phrase        Average w    Average s\n--------------------------------------------------------------------------------------------")
+print("Phrase        Average w    Average s ---------"
+      "----------------------------------------------")
 for phrase in phrases:
     w, s = calculate_vectors(
         phrase, positive_words, neutral_words, negative_words, key_words)
     print(phrase, "|", str(avg_w(w)), "|", str(avg_s(s)), "|")
-    print("--------------------------------------------------------------------------------------------")
+    print("-----------------------------------------------"
+          "---------------------------------------------")
+
 
 def mostPositivePhrase():
     max_value = 0
@@ -76,6 +84,7 @@ def mostPositivePhrase():
             phrase = p
     print("Most positive phrase: ", phrase)
 
+
 def mostNegativePhrase():
     min_value = 0
     phrase = ""
@@ -86,6 +95,7 @@ def mostNegativePhrase():
             min_value = avg_s(s)
             phrase = p
     print("Most negative phrase: ", phrase)
+
 
 mostPositivePhrase()
 mostNegativePhrase()
